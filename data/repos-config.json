@@ -1,0 +1,29 @@
+{
+  "$schema": "../schema/repos-config-schema.json",
+  "destinationOrganization": "dest-org",
+  "migrations": [
+    {
+      "sourceOrganization": "source-org-1",
+      "sourceProject": "Project-A",
+      "destinationProject": "Project-A-New",
+      "repositories": ["repo1", "repo2"],
+      "includeTags": true,
+      "includeWiki": true,
+      "includeArtifacts": true,
+      "serviceConnections": [
+        {
+          "name": "Azure-Prod"
+        }
+      ]
+    },
+    {
+      "sourceOrganization": "source-org-2",
+      "sourceProject": "Project-B",
+      "destinationProject": "Project-B-New",
+      "repositories": [],
+      "includeTags": false,
+      "includeWiki": false,
+      "includeArtifacts": false
+    }
+  ]
+}

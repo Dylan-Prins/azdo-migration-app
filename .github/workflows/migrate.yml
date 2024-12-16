@@ -1,0 +1,35 @@
+name: Migrate Repositories
+
+on:
+  workflow_dispatch:
+    inputs:
+      configPath:
+        description: 'Pad naar configuratiebestand'
+        required: true
+        default: 'data/repos-config.json'
+      maxParallelJobs:
+        description: 'Maximum aantal parallelle jobs (0 = automatisch)'
+        required: true
+        default: '0'
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Voer migratie uit
+      shell: pwsh
+      run: |
+        ./migrate-repos.ps1 `
+          -ConfigPath "${{ github.event.inputs.configPath || 'data/repos-config.json' }}" `
+          -MaxParallelJobs ${{ github.event.inputs.maxParallelJobs || 0 }} `
+          -LogPath "${{ github.workspace }}/logs"
+
+    - name: Upload logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: migration-logs
+        path: logs/

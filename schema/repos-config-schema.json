@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["destinationOrganization", "migrations"],
+  "properties": {
+    "destinationOrganization": {
+      "type": "string",
+      "description": "De naam van de doel Azure DevOps organisatie",
+      "pattern": "^[\\w-]+$"
+    },
+    "migrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "sourceOrganization",
+          "sourceProject",
+          "destinationProject"
+        ],
+        "properties": {
+          "sourceOrganization": {
+            "type": "string",
+            "description": "De naam van de bron Azure DevOps organisatie",
+            "pattern": "^[\\w-]+$"
+          },
+          "sourceProject": {
+            "type": "string",
+            "description": "Naam van het bronproject"
+          },
+          "destinationProject": {
+            "type": "string",
+            "description": "Naam van het doelproject"
+          },
+          "repositories": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Naam van de te migreren repository"
+            },
+            "description": "Lijst van repositories om te migreren. Leeg array betekent alle repositories."
+          },
+          "includeTags": {
+            "type": "boolean",
+            "description": "Of git tags meegenomen moeten worden in de migratie",
+            "default": false
+          },
+          "includeWiki": {
+            "type": "boolean",
+            "description": "Of project en code wiki's meegenomen moeten worden",
+            "default": false
+          },
+          "includeArtifacts": {
+            "type": "boolean",
+            "description": "Of Azure Artifacts feeds meegenomen moeten worden",
+            "default": false
+          },
+          "serviceConnections": {
+            "type": "array",
+            "description": "Service connections om te migreren",
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Naam van de service connection"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
